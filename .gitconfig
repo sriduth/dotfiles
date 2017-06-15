@@ -1,0 +1,39 @@
+[user]
+  email = sriduth.jayhari@juspay.in
+  name = Sriduth Jayhari
+
+[diff]
+  tool = meld
+  conflictstyle = diff3
+
+[core]
+  whitespace = nowarn
+  pager = less
+  packedGitLimit = 512m
+  packedGitWindowSize = 512m
+
+[color]
+  diff = auto
+  status = auto
+  branch = auto
+
+[alias]
+  co = checkout
+  ci = commit
+  ca = commit -a
+  br = branch
+  st = status
+  lg = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative
+  grc = rebase --continue
+  undo = reset --hard
+  changes=diff --name-status -r
+  diffstat=diff --stat -r
+  whois = "!sh -c 'git log -i -1 --pretty=\"format:%an <%ae>\n\" --author=\"$1\"' -"
+  whatis = show -s --pretty='tformat:%h (%s, %ad)' --date=short
+  edit-unmerged = "!f() { git ls-files --unmerged | cut -f2 | sort -u ; }; vim `f`"
+  add-unmerged = "!f() { git ls-files --unmerged | cut -f2 | sort -u ; }; git add `f`"
+
+[pack]
+  deltaCacheSize = 2047m
+  packSizeLimit = 2047m
+  windowMemory = 2047m
