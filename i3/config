@@ -192,15 +192,8 @@ mode $mousemenu {
      bindsym e        exec xinput enable "DLL06B0:00 06CB:78F1"; mode "default"
 }
 
-set $brighnessmenu "brightness: [i]ncrease [d]ecrease"
-bindsym $mod+F10                mode $brighnessmenu
-mode $brighnessmenu {
-     # Sreen brightness controls
-     bindsym Escape   mode "default"
-     bindsym Return   mode "default"
-     bindsym i        exec ~/.config/i3/brightness.sh inc
-     bindsym d        exec ~/.config/i3/brightness.sh dec
-}
+bindsym XF86MonBrightnessUp      exec /usr/bin/light -A 10
+bindsym XF86MonBrightnessDown      exec /usr/bin/light -U 10
 
 bindsym $mod+r mode "resize"
 
