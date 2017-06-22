@@ -58,30 +58,6 @@ URxvt.pointerBlank:         true
 ! Colors
 URxvt*background: #000000
 URxvt*foreground: #ffffff
-! ! black
-! URxvt.color0  : #000000
-! URxvt.color8  : #555555
-! ! red
-! URxvt.color1  : #AA0000
-! URxvt.color9  : #FF5555
-! ! green
-! URxvt.color2  : #00AA00
-! URxvt.color10 : #55FF55
-! ! yellow
-! URxvt.color3  : #AA5500
-! URxvt.color11 : #FFFF55
-! ! blue
-! URxvt.color4  : #0000AA
-! URxvt.color12 : #5555FF
-! ! magenta
-! URxvt.color5  : #AA00AA
-! URxvt.color13 : #FF55FF
-! ! cyan
-! URxvt.color6  : #00AAAA
-! URxvt.color14 : #55FFFF
-! ! white
-! URxvt.color7  : #AAAAAA
-! URxvt.color15 : #FFFFFF
 
 rofi.font: Ubuntu, Regular, 11
 
@@ -89,12 +65,14 @@ rofi.font: Ubuntu, Regular, 11
 ! ROFI Color theme
 ! ------------------------------------------------------------------------------
 rofi.color-enabled: true
-rofi.color-window: #000000, #000000, #1e2529
-rofi.color-normal: #000000, #FFFFFF, #000000, #394249, #ffffff
-rofi.color-active: #000000, #80cbc4, #273238, #394249, #80cbc4
-rofi.color-urgent: #000000, #ff1844, #273238, #394249, #ff1844
-! rofi.color-enabled: true
-! rofi.color-normal: argb:ffffffff , #353535 , argb:ffffffff , #ff372c , #1b2b34
-! rofi.color-urgent: argb:ffffffff , #ff372c , argb:ffffffff , #ff372c , #1b2b34
-! rofi.color-active: argb:ffffffff , #6699cc , argb:ffffffff , #6699cc , #1b2b34
-! rofi.color-window: argb:ffffffff
+rofi.color-window: argb:BF000000, argb:CC000000, #1e2529
+rofi.color-normal: argb:BF000000, #FFFFFF, argb:BF000000, #394249, #ffffff
+rofi.color-active: argb:BF000000, #80cbc4, #273238, #394249, #80cbc4
+rofi.color-urgent: argb:BF000000, #ff1844, #273238, #394249, #ff1844
+rofi.location: 0
+rofi.padding: 5
+rofi.line-margin: 0
+rofi.eh: 1
+rofi.line-padding: 5
+rofi.seperator-style: solid
+rofi.scrollbar-width: 2
