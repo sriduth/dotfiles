@@ -1,0 +1,13 @@
+#!/bin/bash
+
+# Prevent spelling accidents when creating commits to be deployed
+# by teamcity
+
+exec < /dev/tty
+
+printf "Would you like to trigger a for this commit?\n[Y/n]: "
+read autodeploy
+
+if [ "$autodeploy" == "Y" ]; then
+    echo ":autodeploy" >> $1
+fi
