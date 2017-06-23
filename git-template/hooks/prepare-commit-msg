@@ -3,11 +3,49 @@
 # Prevent spelling accidents when creating commits to be deployed
 # by teamcity
 
-exec < /dev/tty
+COMMIT_MSG_FILE=$1
+function do_tc_init {
+    exec < /dev/tty
 
-printf "Would you like to trigger a for this commit?\n[Y/n]: "
-read autodeploy
+    printf "Enable teamcity for this project? [Y/n]\n"
+    read enable_tc
 
-if [ "$autodeploy" == "Y" ]; then
-    echo ":autodeploy" >> $1
+    if [ "$enable_tc" == "Y" ]; then
+        init_teamcity_project
+        prompt_user
+    else
+        no_teamcity_project
+    fi
+}
+
+function prompt_user {
+    printf "Would you like to trigger a for this commit?\n[Y/n]: "
+    read autodeploy
+
+    if [ "$autodeploy" == "Y" ]; then
+        echo $1
+        echo ":autodeploy" >> $COMMIT_MSG_FILE
+    fi
+}
+
+function init_teamcity_project {
+    touch .teamcityproj
+    echo "enabled" > ./.git/hooks/.teamcityproj
+}
+
+function no_teamcity_project {
+    touch .teamcityproj
+    echo "disabled" > ./.git/hooks/.teamcityproj
+}
+
+
+if [ -f ".git/hooks/.teamcityproj" ]; then
+    tc_enabled=$(cat ./.git/hooks/.teamcityproj)
+    if [ "$tc_enabled" == "enabled" ]; then
+        exec < /dev/tty
+        prompt_user
+    fi
+else
+    do_tc_init
 fi
+
