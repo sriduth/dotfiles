@@ -11,6 +11,7 @@
 	pager = less
 	packedGitLimit = 512m
 	packedGitWindowSize = 512m
+	editor = nano
 
 [color]
 	diff = auto
@@ -32,7 +33,7 @@
 	whatis = show -s --pretty='tformat:%h (%s, %ad)' --date=short
 	edit-unmerged = "!f() { git ls-files --unmerged | cut -f2 | sort -u ; }; vim `f`"
 	add-unmerged = "!f() { git ls-files --unmerged | cut -f2 | sort -u ; }; git add `f`"
-
+	commit-deploy = "!f() { export CREATE_DEPLOYMENT=true; git commit; unset CREATE_DEPLOYMENT; }; f;"
 [pack]
 	deltaCacheSize = 2047m
 	packSizeLimit = 2047m

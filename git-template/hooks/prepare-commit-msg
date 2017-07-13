@@ -3,6 +3,10 @@
 # Prevent spelling accidents when creating commits to be deployed
 # by teamcity
 
+if [ "$CREATE_DEPLOYMENT" != "true" ]; then
+   exit 0;
+fi
+
 COMMIT_MSG_FILE=$1
 function do_tc_init {
     exec < /dev/tty
