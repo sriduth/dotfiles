@@ -1,0 +1,61 @@
+#/usr/bin/env bash
+
+
+# Get a list of all files currently staged
+filesadded=$(git diff --cached --name-only --diff-filter=d)
+
+secret_in_code="false"
+swap_files="false"
+
+printf "\n\e[1mChecking files for secrets.\n\e[0m"
+
+for file in $filesadded
+do
+	type=$(file "$file" --mime-type)
+	
+	#echo $type
+ 	#echo $type | grep  -e gz -e bz
+
+	search_command=grep
+	arguments='-i -q -e aws -e aws_secret_key -e aws_accesss_key'
+
+	if echo "$type" | grep -q -e "gz" -e "lz"; then
+		search_command=xzgrep
+	fi
+	
+	# For zip files, use `zipgrep` as `xzgrep` can not process them.
+	if $(echo "$type" | grep -q -e "application/zip"); then
+		search_command=zipgrep
+		arguments='"(aws*)" -q'
+	fi
+	
+	if [ -d "$file" ]; then
+		is_folder="-r"
+	else
+		is_folder=""
+	fi
+	
+	command_str="$search_command $arguments $file"
+
+	if eval $command_str; then
+		printf "\n  \e[1m\e[31m$file\e[0m"
+		secret_in_code="true" 
+	elif $(echo "$file" | grep -q -e "~" -e "#"); then
+		printf "\n  \e[33m$file\e[0m"
+		swap_files="true"
+	else
+		printf "\n  \e[90m$file\e[0m"
+	fi
+done
+
+
+if [ "$swap_files" == "true" ]; then
+	printf "\n\n\e[33mWarning: Swap files staged for commit.\e[0m"
+fi
+
+if [ "$secret_in_code" == "true" ]; then
+	printf "\n\n\e[1m\e[31mDanger: Check files.\n\e[0m"
+	exit -1
+else
+	printf "\n\n\e[1m\e[33mAll files look Ok.\n\e[0m"
+fi
