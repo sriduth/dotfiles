@@ -31,11 +31,8 @@ values."
    ;; List of configuration layers to load.
    dotspacemacs-configuration-layers
    '(
-     erlang
-     python
-     markdown
-     react
      elixir
+     haskell
      purescript
      javascript
      ;; ----------------------------------------------------------------
@@ -44,11 +41,11 @@ values."
      ;; <M-m f e R> (Emacs style) to install them.
      ;; ----------------------------------------------------------------
      ivy
-     ;; auto-completion
-     ;; better-defaults
+     auto-completion
+     better-defaults
      emacs-lisp
      git
-     markdown
+     ;; markdown
      org
      ;; (shell :variables
      ;;        shell-default-height 30
@@ -61,7 +58,7 @@ values."
    ;; wrapped in a layer. If you need some configuration for these
    ;; packages, then consider creating a layer. You can also put the
    ;; configuration in `dotspacemacs/user-config'.
-   dotspacemacs-additional-packages '()
+   dotspacemacs-additional-packages '(web-mode)
    ;; A list of packages that cannot be updated.
    dotspacemacs-frozen-packages '()
    ;; A list of packages that will not be installed and loaded.
@@ -117,7 +114,7 @@ values."
    ;; directory. A string value must be a path to an image format supported
    ;; by your Emacs build.
    ;; If the value is nil then no banner is displayed. (default 'official)
-   dotspacemacs-startup-banner 'random
+   dotspacemacs-startup-banner 'official
    ;; List of items to show in startup buffer or an association list of
    ;; the form `(list-type . list-size)`. If nil then it is disabled.
    ;; Possible values for list-type are:
@@ -133,12 +130,14 @@ values."
    ;; List of themes, the first of the list is loaded when spacemacs starts.
    ;; Press <SPC> T n to cycle to the next theme in the list (works great
    ;; with 2 themes variants, one dark and one light)
-   dotspacemacs-themes '(dracula)
+   dotspacemacs-themes '(dracula
+                         spacemacs-dark
+                         spacemacs-light)
    ;; If non nil the cursor color matches the state color in GUI Emacs.
    dotspacemacs-colorize-cursor-according-to-state t
    ;; Default font, or prioritized list of fonts. `powerline-scale' allows to
    ;; quickly tweak the mode-line size to make separators look not too crappy.
-   dotspacemacs-default-font '("Monospace"
+   dotspacemacs-default-font '("DejaVu Sans Mono"
                                :size 14
                                :weight normal
                                :width normal
@@ -315,6 +314,14 @@ layers configuration.
 This is the place where most of your configurations should be done. Unless it is
 explicitly specified that a variable should be set before a package is loaded,
 you should place your code here."
+  (setq powerline-default-separator 'arrow)
+  (setq neo-theme 'ascii)
+  (windmove-default-keybindings)
+  (add-hook 'web-mode-hook
+            (lambda ()
+              (if (equal web-mode-content-type "javascript")
+                  (web-mode-set-content-type "jsx"))))
+  (setq js2-basic-offset 2)
   )
 
 ;; Do not write anything past this comment. This is where Emacs will
@@ -324,47 +331,22 @@ you should place your code here."
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(ansi-color-faces-vector
-   [default default default italic underline success warning error])
  '(ansi-color-names-vector
    ["#0a0814" "#f2241f" "#67b11d" "#b1951d" "#4f97d7" "#a31db1" "#28def0" "#b2b2b2"])
- '(custom-enabled-themes (quote (spacemacs-dark)))
  '(custom-safe-themes
    (quote
-    ("fad38808e844f1423c68a1888db75adf6586390f5295a03823fa1f4959046f81" "7feeed063855b06836e0262f77f5c6d3f415159a98a9676d549bfeb6c49637c4" "ff7625ad8aa2615eae96d6b4469fcc7d3d20b2e1ebc63b761a349bebbb9d23cb" "19ba41b6dc0b5dd34e1b8628ad7ae47deb19f968fe8c31853d64ea8c4df252b8" "cc60d17db31a53adf93ec6fad5a9cfff6e177664994a52346f81f62840fe8e23" "b571f92c9bfaf4a28cb64ae4b4cdbda95241cd62cf07d942be44dc8f46c491f4" "39dd7106e6387e0c45dfce8ed44351078f6acd29a345d8b22e7b8e54ac25bac4" "1b1e54d9e0b607010937d697556cd5ea66ec9c01e555bb7acea776471da59055" "f78de13274781fbb6b01afd43327a4535438ebaeec91d93ebdbba1e3fba34d3c" "fa2b58bb98b62c3b8cf3b6f02f058ef7827a8e497125de0254f56e373abee088" "bffa9739ce0752a37d9b1eee78fc00ba159748f50dc328af4be661484848e476" "8aebf25556399b58091e533e455dd50a6a9cba958cc4ebb0aab175863c25b9a4" default)))
- '(ensime-sem-high-faces
-   (quote
-    ((var :foreground "#9876aa" :underline
-          (:style wave :color "yellow"))
-     (val :foreground "#9876aa")
-     (varField :slant italic)
-     (valField :foreground "#9876aa" :slant italic)
-     (functionCall :foreground "#a9b7c6")
-     (implicitConversion :underline
-                         (:color "#808080"))
-     (implicitParams :underline
-                     (:color "#808080"))
-     (operator :foreground "#cc7832")
-     (param :foreground "#a9b7c6")
-     (class :foreground "#4e807d")
-     (trait :foreground "#4e807d" :slant italic)
-     (object :foreground "#6897bb" :slant italic)
-     (package :foreground "#cc7832")
-     (deprecated :strike-through "#a9b7c6"))))
+    ("ff7625ad8aa2615eae96d6b4469fcc7d3d20b2e1ebc63b761a349bebbb9d23cb" "bffa9739ce0752a37d9b1eee78fc00ba159748f50dc328af4be661484848e476" "fa2b58bb98b62c3b8cf3b6f02f058ef7827a8e497125de0254f56e373abee088" default)))
  '(evil-want-Y-yank-to-eol nil)
  '(package-selected-packages
    (quote
-    (noctilux-theme afternoon-theme niflheim-theme zerodark-theme doom-themes erlang hemisu-theme dracula-theme solarized-theme underwater-theme-theme underwater-theme tao-theme minimal-theme monochrome-theme smeargle orgit org-projectile org-present org-pomodoro alert log4e gntp org-download magit-gitflow htmlize gnuplot gitignore-mode gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link evil-magit yapfify pyvenv pytest pyenv-mode py-isort pip-requirements live-py-mode hy-mode cython-mode anaconda-mode python-mode pythonic toxi-theme atom-dark-theme atom-one-dark-theme cherry-blossom-theme monokai-alt-theme monokai-theme magit java-imports mmm-mode markdown-toc markdown-mode gh-md groovy-imports groovy-mode grails-mode ws-butler winum which-key wgrep web-mode web-beautify volatile-highlights vi-tilde-fringe uuidgen use-package toc-org tagedit spaceline smex slim-mode scss-mode sass-mode restart-emacs request rainbow-delimiters pug-mode psci psc-ide popwin persp-mode pcre2el paradox org-bullets open-junk-file ob-elixir neotree move-text macrostep lorem-ipsum livid-mode linum-relative link-hint less-css-mode json-mode js2-refactor js-doc ivy-hydra info+ indent-guide hungry-delete hl-todo highlight-parentheses highlight-numbers highlight-indentation hide-comnt help-fns+ helm-make google-translate golden-ratio flycheck-mix flycheck-credo flx-ido fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-lisp-state evil-indent-plus evil-iedit-state evil-exchange evil-escape evil-ediff evil-args evil-anzu eval-sexp-fu emmet-mode elisp-slime-nav dumb-jump define-word counsel-projectile column-enforce-mode coffee-mode clean-aindent-mode auto-highlight-symbol auto-compile alchemist aggressive-indent adaptive-wrap ace-window ace-link)))
- '(psc-ide-add-import-on-completion t)
- '(psc-ide-rebuild-on-save nil)
- '(safe-local-variable-values
-   (quote
-    ((psc-ide-source-globs "src/**/*.purs" "bower_components/purescript-*/src/**/*.purs")
-     (elixir-enable-compilation-checking . t)
-     (elixir-enable-compilation-checking)))))
+    (flycheck-mix alchemist ob-elixir flycheck-credo elixir-mode intero hlint-refactor hindent haskell-snippets company-ghci company-ghc ghc haskell-mode company-cabal cmm-mode psci purescript-mode psc-ide flycheck unfill smeargle orgit org-projectile org-present org-pomodoro alert log4e gntp org-download mwim magit-gitflow htmlize gnuplot gitignore-mode gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link evil-magit magit magit-popup git-commit with-editor web-mode web-beautify livid-mode skewer-mode simple-httpd json-mode json-snatcher json-reformat js2-refactor multiple-cursors js2-mode js-doc company-tern dash-functional tern coffee-mode fuzzy company-statistics company auto-yasnippet yasnippet ac-ispell auto-complete ws-butler winum which-key wgrep volatile-highlights vi-tilde-fringe uuidgen use-package toc-org spaceline powerline smex restart-emacs request rainbow-delimiters popwin persp-mode pcre2el paradox spinner org-plus-contrib org-bullets open-junk-file neotree move-text macrostep lorem-ipsum linum-relative link-hint ivy-hydra info+ indent-guide hydra hungry-delete hl-todo highlight-parentheses highlight-numbers parent-mode highlight-indentation hide-comnt help-fns+ helm-make helm helm-core google-translate golden-ratio flx-ido flx fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-lisp-state smartparens evil-indent-plus evil-iedit-state iedit evil-exchange evil-escape evil-ediff evil-args evil-anzu anzu evil goto-chg undo-tree eval-sexp-fu highlight elisp-slime-nav dumb-jump popup f s diminish define-word counsel-projectile projectile pkg-info epl counsel swiper ivy column-enforce-mode clean-aindent-mode bind-map bind-key auto-highlight-symbol auto-compile packed dash async aggressive-indent adaptive-wrap ace-window ace-link avy)))
+ '(psc-ide-add-import-on-completion t t)
+ '(psc-ide-rebuild-on-save nil t))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(default ((t (:family "DejaVu Sans Mono" :foundry "PfEd" :slant normal :weight normal :height 132 :width normal)))))
+ '(default ((((type nil)) (:background "#000000" :foreground "#f8f8f2")) (((class color) (min-colors 89)) (:background "#282a36" :foreground "#f8f8f2"))))
+ '(neo-dir-link-face ((t (:foreground "deep sky blue" :slant normal :weight bold :height 90 :family "Fantasque Sans Mono"))))
+ '(neo-file-link-face ((t (:foreground "White" :weight normal :height 90 :family "Fantasque Sans Mono")))))
