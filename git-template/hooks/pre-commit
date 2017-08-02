@@ -1,4 +1,4 @@
-#/usr/bin/env bash
+#/bin/bash
 
 
 # Get a list of all files currently staged
@@ -24,7 +24,7 @@ do
 	  search_command=grep
 
 	  # Search for aws related strings.
-	  arguments='-i -q -e aws -e aws_secret_key -e aws_accesss_key'
+	  arguments='-i -q -e aws_secret_key -e aws_accesss_key'
 
 	  # For Gzipped, LZ compressed files, and tarballs, search using `xzgrep`.
 	  if echo "$type" | grep -q -e "gz" -e "lz"; then
@@ -42,28 +42,30 @@ do
 	  command_str="$search_command $arguments $file"
 
 	  if eval $command_str; then
-		    __output+="\n  \e[1m\e[31m$file\e[0m"
+		    __output+="\n  \033[1m\033[31m$file\033[0m"
 		    secret_in_code="true"
     elif $(echo "$inferred_type" | grep -q -e "private key"); then
-        __output+="\n  \e[1m\e[34m$file\e[0m"
+        __output+="\n  \033[1m\033[34m$file\033[0m"
 		    secret_in_code="true"
 	  elif $(echo "$file" | grep -q -e "~" -e "#"); then
-		    __output+="\n  \e[33m$file\e[0m"
+		    __output+="\n  \033[33m$file\033[0m"
 		    swap_files="true"
 	  else
-		    __output+="\n  \e[90m$file\e[0m"
+		    __output+="\n  \033[90m$file\033[0m"
 	  fi
 done
 
 echo -e $__output
 
 if [ "$swap_files" == "true" ]; then
-	  echo -e "\n\n\e[33mWarning: Swap files staged for commit.\e[0m"
+	  echo -e "\n\n\033[33mWarning: Swap files staged for commit.\033[0m"
 fi
 
 if [ "$secret_in_code" == "true" ]; then
-    echo -e "\n\n\e[1m\e[31mDanger: Check files.\n\e[0m"
+    echo -e "\n\n\033[1m\033[31mDanger: Check files.\n\033[0m"
 	  exit -1
 else
-    echo -e "\n\n\e[1m\e[33mAll files look Ok.\n\e[0m"
+    echo -e "\n\n\033[1m\033[33mAll files look Ok.\n\033[0m"
 fi
+
+
