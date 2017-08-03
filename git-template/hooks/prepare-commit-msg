@@ -33,12 +33,10 @@ function prompt_user {
 }
 
 function init_teamcity_project {
-    touch .teamcityproj
     echo "enabled" > ./.git/hooks/.teamcityproj
 }
 
 function no_teamcity_project {
-    touch .teamcityproj
     echo "disabled" > ./.git/hooks/.teamcityproj
 }
 
