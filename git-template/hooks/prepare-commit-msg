@@ -23,6 +23,7 @@ function do_tc_init {
 }
 
 function prompt_user {
+    printf "----------"
     printf "Would you like to trigger a for this commit?\n[Y/n]: "
     read autodeploy
 
@@ -30,6 +31,11 @@ function prompt_user {
         echo $1
         echo ":autodeploy" >> $COMMIT_MSG_FILE
     fi
+
+    printf "Enter bugs fixed: "
+    read bugs_fixed
+
+    echo ":fixes-bugs" $bugs_fixed >> $COMMIT_MSG_FILE
 }
 
 function init_teamcity_project {
